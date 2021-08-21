@@ -1,0 +1,13 @@
+1. User menekan tombol start untuk membuka camera
+2. Terdapat tombol toggle light
+3. Terdapat tombol shoot
+4. Aplikasi dapat membaca input dari push button sebagai penanda mulai scanning
+5. Scanning dilakukan maksimal n detik
+6. Setiap sample diganti, push button harus dipencet untuk mereset scanning
+7. Jika masih terjadi perubahan warna
+
+
+
+
+Alur
+Tekan Push button -> software memulai scanning -> catat warna yang ditemukan jika terdapat pada list warna target -> jika masih terjadi perubahan, warna terus dicatat -> result / hasil akhir adalah warna terakhir yang dicatat

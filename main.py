@@ -4,23 +4,47 @@ import numpy as np
 import imutils
   
 # Replace the below URL with your own. Make sure to add "/shot.jpg" at last.
-url = "http://192.168.43.233:8080/shot.jpg"
 
-WIDTH = 768
-HEIGHT = 768
-  
-# While loop to continuously fetching data from the Url
-while True:
+WIDTH = 320
+HEIGHT = 240
+
+fromIpCam = False
+cap = 1
+if (not fromIpCam):
+    cap = cv2.VideoCapture(0)
+    cap.set(cv2.CAP_PROP_FRAME_WIDTH, WIDTH)
+    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, HEIGHT)
+
+
+def getVideoFromIPCam():
+    url = "http://192.168.43.123:8080/shot.jpg"
     img_resp = requests.get(url)
     img_arr = np.array(bytearray(img_resp.content), dtype=np.uint8)
     img = cv2.imdecode(img_arr, -1)
     frame = imutils.resize(img, width=WIDTH, height=HEIGHT)
 
+    return frame
+
+def getVideoFromCamera():
+    _, frame = cap.read()
+
+    return frame
+
+
+  
+# While loop to continuously fetching data from the Url
+while True:
+    frame = 1
+    if (fromIpCam):
+        frame = getVideoFromIPCam()
+    else:
+        frame = getVideoFromCamera()
+
     hsv_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
     # Red color
     low_red = np.array([0, 85, 65])
-    high_red = np.array([15, 255, 255])
+    high_red = np.array([10, 255, 255])
     red_mask = cv2.inRange(hsv_frame, low_red, high_red)
     # red = cv2.bitwise_and(frame, frame, mask=red_mask)
 
@@ -70,7 +94,7 @@ while True:
 
     for c in blueContours:
         area = cv2.contourArea(c)
-        if (area > 2500):
+        if (area > 100):
             cv2.drawContours(frame, [c], -1, (0, 255, 0), thickness=2)
 
             M = cv2.moments(c)
@@ -82,7 +106,7 @@ while True:
 
     for c in redContours:
         area = cv2.contourArea(c)
-        if (area > 2500):
+        if (area > 100):
             cv2.drawContours(frame, [c], -1, (0, 255, 0), thickness=2)
 
             M = cv2.moments(c)
@@ -94,7 +118,7 @@ while True:
 
     for c in redContours2:
         area = cv2.contourArea(c)
-        if (area > 2500):
+        if (area > 100):
             cv2.drawContours(frame, [c], -1, (0, 255, 0), thickness=2)
 
             M = cv2.moments(c)
@@ -106,7 +130,7 @@ while True:
     
     for c in greenContours:
         area = cv2.contourArea(c)
-        if (area > 2500):
+        if (area > 100):
             cv2.drawContours(frame, [c], -1, (0, 255, 0), thickness=2)
 
             M = cv2.moments(c)
