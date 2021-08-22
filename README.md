@@ -1,1 +1,1 @@
-# image-processing-project
+# Image Processing Project
