@@ -23,7 +23,6 @@ def getCondition(wavelength):
     else:
         return "Santuy"
 
-
 redMask = Mask(name="RED", low=[0, 85, 65], high=[10, 255, 255])
 redMask2 = Mask(name="RED", low=[160, 85, 65], high=[179, 255, 255])
 blueMask = Mask(name="BLUE", low=[95, 100, 70], high=[130, 255, 255])
@@ -31,11 +30,11 @@ greenMask = Mask(name="GREEN", low=[35, 95, 70], high=[80, 255, 255])
 orangeMask = Mask(name="ORANGE", low=[10, 100, 20], high=[10, 100, 20])
 exceptWhiteMask = Mask(name="WHITE", low=[0, 42, 0], high=[179, 255, 255])
 
-  
 # While loop to continuously fetching data from the Url
 while True:
     # frame = cam.getVideo()
-    frame = cv2.imread("img/1.jpg")
+
+    frame = cv2.imread("img/3.png")
 
     hsv_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
@@ -45,13 +44,16 @@ while True:
     greenMask.updateFrame(frame=hsv_frame)
     orangeMask.updateFrame(frame=hsv_frame)
 
+    # n = cv2.countNonZero(blueMask.getMask())
+    # print(n)
+
     redMask.drawContours(frame=frame)
     redMask2.drawContours(frame)
     blueMask.drawContours(frame)
     greenMask.drawContours(frame)
 
-    m = cv2.mean(frame, blueMask.getMask())
-    wl = getWaveLength(m[2], m[1], m[0])
+    # m = cv2.mean(frame, blueMask.getMask())
+    # wl = getWaveLength(m[2], m[1], m[0])
 
     # print(m)
 
