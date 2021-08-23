@@ -29,7 +29,3 @@ class Camera:
             _, frame = self.cap.read()
 
         return frame
-    
-    def getPicture(self, frame):
-        cv2.imwrite('img/out.jpg',frame)
-        print("Success")
