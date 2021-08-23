@@ -10,7 +10,7 @@ class Camera:
 
         self.fromIpCam = ipCam
         self.cap = 1
-        self.url = "http://192.168.43.37:8080/shot.jpg"
+        self.url = "http://192.168.43.189:8080/shot.jpg"
 
         if (not self.fromIpCam):
             self.cap = cv2.VideoCapture(0)

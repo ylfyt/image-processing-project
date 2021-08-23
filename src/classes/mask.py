@@ -21,7 +21,8 @@ class Mask:
         return contours
 
     def drawContours(self, frame):
-        for c in self.getContours():
+        con = self.getContours()
+        for c in con:
             area = cv2.contourArea(c)
             if (area > self.SIZEOFMINCONTOURAREA):
                 cv2.drawContours(frame, [c], -1, (0, 255, 0), thickness=self.THICKNESSOFCONTOUREDGE)
