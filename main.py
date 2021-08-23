@@ -61,6 +61,10 @@ class Camera:
             _, frame = self.cap.read()
 
         return frame
+    
+    def getPicture(self, frame):
+        cv2.imwrite('img/out.jpg',frame)
+        print("Success")
 
 cam = Camera(ipCam=True, width=480, height=320)
 
@@ -90,8 +94,11 @@ while True:
 
     cv2.imshow("Android_cam", frame)
 
+    key = cv2.waitKey(1)
     # Press Esc key to exit
-    if cv2.waitKey(1) == 27:
+    if (key == 27):
         break
+    elif(key == 32):
+        cam.getPicture(frame)
   
 cv2.destroyAllWindows()
