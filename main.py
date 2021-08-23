@@ -5,11 +5,35 @@ import imutils
   
 # Replace the below URL with your own. Make sure to add "/shot.jpg" at last.
 
-WIDTH = 320
-HEIGHT = 240
 
-fromIpCam = False
+class Mask:
+    def __init__(self, frame,low, high):
+        self.lower = np.array(low)
+        self.upper = np.array(high)
+        self.mask = cv2.inRange(src=frame, lowerb=self.lower, upperb=self.upper)
+    
+    def getMask(self):
+        return self.mask
+
+    def getContours(self):
+        contours = cv2.findContours(self.mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+        contours = imutils.grab_contours(contours)
+        return contours
+
+
+
+WIDTH = 480
+HEIGHT = 320
+
+fromIpCam = True
 cap = 1
+url = "http://192.168.43.37:8080/shot.jpg"
+
+
+SIZEOFMINCONTOURAREA = 500
+THICKNESSOFCONTOUREDGE = 1
+
+
 if (not fromIpCam):
     cap = cv2.VideoCapture(0)
     cap.set(cv2.CAP_PROP_FRAME_WIDTH, WIDTH)
@@ -17,7 +41,6 @@ if (not fromIpCam):
 
 
 def getVideoFromIPCam():
-    url = "http://192.168.43.123:8080/shot.jpg"
     img_resp = requests.get(url)
     img_arr = np.array(bytearray(img_resp.content), dtype=np.uint8)
     img = cv2.imdecode(img_arr, -1)
@@ -43,59 +66,39 @@ while True:
     hsv_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
     # Red color
-    low_red = np.array([0, 85, 65])
-    high_red = np.array([10, 255, 255])
-    red_mask = cv2.inRange(hsv_frame, low_red, high_red)
     # red = cv2.bitwise_and(frame, frame, mask=red_mask)
+    redMask = Mask(frame=hsv_frame, low=[0, 85, 65], high=[10, 255, 255])
 
     # Red color 2
-    low_red2 = np.array([160, 85, 65])
-    high_red2 = np.array([179, 255, 255])
-    red_mask2 = cv2.inRange(hsv_frame, low_red2, high_red2)
-    # red2 = cv2.bitwise_and(frame, frame, mask=red_mask2)
+    redMask2 = Mask(frame=hsv_frame, low=[160, 85, 65], high=[179, 255, 255])
 
     # Blue color
-    low_blue = np.array([95, 100, 70])
-    high_blue = np.array([130, 255, 255])
-    blue_mask = cv2.inRange(hsv_frame, low_blue, high_blue)
-    # blue = cv2.bitwise_and(frame, frame, mask=blue_mask)
+    blueMask = Mask(frame=hsv_frame, low=[95, 100, 70], high=[130, 255, 255])
 
     # Green color
-    low_green = np.array([35, 95, 70])
-    high_green = np.array([80, 255, 255])
-    green_mask = cv2.inRange(hsv_frame, low_green, high_green)
-    # green = cv2.bitwise_and(frame, frame, mask=green_mask)
+    greenMask = Mask(frame=hsv_frame, low=[35, 95, 70], high=[80, 255, 255])
 
     # orange color
-    # low_orange = np.array([10, 100, 20])
-    # high_orange = np.array([25, 255, 255])
-    # orange_mask = cv2.inRange(hsv_frame, low_orange, high_orange)
-    # orange = cv2.bitwise_and(frame, frame, mask=orange_mask)
+    orangeMask = Mask(frame=hsv_frame, low=[10, 100, 20], high=[10, 100, 20])
 
     # Every color except white
-    # low = np.array([0, 42, 0])
-    # high = np.array([179, 255, 255])
-    # mask = cv2.inRange(hsv_frame, low, high)
-    # result = cv2.bitwise_and(frame, frame, mask=mask)
+    exceptWhiteMask = Mask(frame=hsv_frame, low=[0, 42, 0], high=[179, 255, 255])
+    
   
 
-    redContours = cv2.findContours(red_mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
-    redContours = imutils.grab_contours(redContours)
+    redContours = redMask.getContours()
 
-    redContours2 = cv2.findContours(red_mask2, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
-    redContours2 = imutils.grab_contours(redContours2)
+    redContours2 = redMask2.getContours()
 
-    blueContours = cv2.findContours(blue_mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
-    blueContours = imutils.grab_contours(blueContours)
+    blueContours = blueMask.getContours()
 
-    greenContours = cv2.findContours(green_mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
-    greenContours = imutils.grab_contours(greenContours)
+    greenContours = greenMask.getContours()
 
 
     for c in blueContours:
         area = cv2.contourArea(c)
-        if (area > 100):
-            cv2.drawContours(frame, [c], -1, (0, 255, 0), thickness=2)
+        if (area > SIZEOFMINCONTOURAREA):
+            cv2.drawContours(frame, [c], -1, (0, 255, 0), thickness=THICKNESSOFCONTOUREDGE)
 
             M = cv2.moments(c)
             cx = int(M["m10"]/M["m00"])
@@ -106,8 +109,8 @@ while True:
 
     for c in redContours:
         area = cv2.contourArea(c)
-        if (area > 100):
-            cv2.drawContours(frame, [c], -1, (0, 255, 0), thickness=2)
+        if (area > SIZEOFMINCONTOURAREA):
+            cv2.drawContours(frame, [c], -1, (0, 255, 0), thickness=THICKNESSOFCONTOUREDGE)
 
             M = cv2.moments(c)
             cx = int(M["m10"]/M["m00"])
@@ -118,8 +121,8 @@ while True:
 
     for c in redContours2:
         area = cv2.contourArea(c)
-        if (area > 100):
-            cv2.drawContours(frame, [c], -1, (0, 255, 0), thickness=2)
+        if (area > SIZEOFMINCONTOURAREA):
+            cv2.drawContours(frame, [c], -1, (0, 255, 0), thickness=THICKNESSOFCONTOUREDGE)
 
             M = cv2.moments(c)
             cx = int(M["m10"]/M["m00"])
@@ -130,8 +133,8 @@ while True:
     
     for c in greenContours:
         area = cv2.contourArea(c)
-        if (area > 100):
-            cv2.drawContours(frame, [c], -1, (0, 255, 0), thickness=2)
+        if (area > SIZEOFMINCONTOURAREA):
+            cv2.drawContours(frame, [c], -1, (0, 255, 0), thickness=THICKNESSOFCONTOUREDGE)
 
             M = cv2.moments(c)
             cx = int(M["m10"]/M["m00"])
