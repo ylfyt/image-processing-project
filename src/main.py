@@ -28,7 +28,7 @@ colorMasks = Config.getColorMasks()
 while True:
     # frame = cam.getVideo()
 
-    frame = cv2.imread("img/1.jpg")
+    frame = cv2.imread("img/out2.jpg")
 
     hsv_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
@@ -39,8 +39,10 @@ while True:
     # n = cv2.countNonZero(blueMask.getMask())
     # print(n)
 
-    for mask in colorMasks:
-        mask.drawContours(frame=frame)
+    # for mask in colorMasks:
+    #     mask.drawContours(frame=frame)
+
+    colorMasks[2].drawContours(frame)
 
     # m = cv2.mean(frame, blueMask.getMask())
     # wl = getWaveLength(m[2], m[1], m[0])

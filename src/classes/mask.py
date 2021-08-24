@@ -4,8 +4,8 @@ import imutils
 
 class Mask:
     def __init__(self, name, low, high):
-        self.SIZEOFMINCONTOURAREA = 1000
-        self.THICKNESSOFCONTOUREDGE = 2
+        self.SIZE_OF_MIN_CONTOUR_AREA = 1000
+        self.THICKNESS_OF_CONTOUR_EDGE = 2
 
         self.name = name
         self.lower = np.array(low)
@@ -34,12 +34,13 @@ class Mask:
 
         for idx, c in enumerate(con):
             area = cv2.contourArea(c)
-            if (area > self.SIZEOFMINCONTOURAREA):
-                cv2.drawContours(frame, [c], -1, (0, 255, 0), thickness=self.THICKNESSOFCONTOUREDGE)
+            if (area > self.SIZE_OF_MIN_CONTOUR_AREA):
+                cv2.drawContours(frame, [c], -1, (0, 255, 0), thickness=self.THICKNESS_OF_CONTOUR_EDGE)
 
                 M = cv2.moments(c)
                 cx = int(M["m10"]/M["m00"])
                 cy = int(M["m01"]/M["m00"])
 
-                cv2.circle(frame, (cx, cy), 4, (255, 255, 255), -1)
-                cv2.putText(frame, self.name, (cx-0, cy-15), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), thickness=2)
+                # cv2.circle(frame, (cx, cy), 4, (255, 255, 255), -1)
+                # cv2.putText(frame, self.name, (cx-0, cy-15), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), thickness=2)
+                cv2.putText(frame, self.name, (5, 15), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), thickness=1)
