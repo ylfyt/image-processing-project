@@ -4,7 +4,7 @@ import imutils
 
 class Mask:
     def __init__(self, name, low, high):
-        self.SIZE_OF_MIN_CONTOUR_AREA = 1000
+        self.SIZE_OF_MIN_CONTOUR_AREA = 750
         self.THICKNESS_OF_CONTOUR_EDGE = 2
 
         self.name = name
@@ -43,4 +43,4 @@ class Mask:
 
                 # cv2.circle(frame, (cx, cy), 4, (255, 255, 255), -1)
                 # cv2.putText(frame, self.name, (cx-0, cy-15), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), thickness=2)
-                cv2.putText(frame, self.name, (5, 15), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), thickness=1)
+                cv2.putText(frame, self.name, (5, 15), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), thickness=1)

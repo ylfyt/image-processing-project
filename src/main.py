@@ -1,10 +1,11 @@
+from numpy import info
 from classes.camera import Camera
 from classes.mask import Mask
 from classes.config import Config
 import cv2
 
 def getPicture(frame):
-    cv2.imwrite('img/out.jpg', frame)
+    cv2.imwrite('../img/out.jpg', frame)
     print("Success")
 
 def getWaveLength(r, g, b):
@@ -22,32 +23,41 @@ def getCondition(wavelength):
     else:
         return "Santuy"
 
+def getMaxMask(masks):
+    idxMax = 0
+    for i in range(len(masks)):
+        nMax = cv2.countNonZero(masks[idxMax].getMask())
+        n = cv2.countNonZero(masks[i].getMask())
+        if (n > nMax):
+            idxMax = i
+    
+    return [masks[idxMax], cv2.countNonZero(masks[idxMax].getMask())]
+
 cam = Camera(ipCam=True, width=480, height=320)
 colorMasks = Config.getColorMasks()
 
 while True:
-    # frame = cam.getVideo()
+    frame = cam.getVideo()
 
-    frame = cv2.imread("img/out2.jpg")
+    # frame = cv2.imread("../img/1.jpg")
 
     hsv_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
-
 
     for mask in colorMasks:
         mask.updateFrame(frame=hsv_frame)
 
-    # n = cv2.countNonZero(blueMask.getMask())
-    # print(n)
+    info = getMaxMask(colorMasks)
+    maxMask = info[0]
+    nMax = info[1]
 
-    # for mask in colorMasks:
-    #     mask.drawContours(frame=frame)
+    if (nMax > 750):
+        maxMask.drawContours(frame)
 
-    colorMasks[2].drawContours(frame)
+        meanRGB = cv2.mean(frame, maxMask.getMask())
+        wavelength = getWaveLength(meanRGB[2], meanRGB[1], meanRGB[0])
+        condition = getCondition(wavelength)
 
-    # m = cv2.mean(frame, blueMask.getMask())
-    # wl = getWaveLength(m[2], m[1], m[0])
-
-    # print(m)
+        print(condition)
 
     cv2.imshow("Camera", frame)
 
