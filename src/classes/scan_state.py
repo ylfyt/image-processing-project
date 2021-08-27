@@ -6,6 +6,8 @@ class ScanState:
     scanStartTime = time.time()
     STATE_INFO = ["idle", "scanning", "picture"]
     state = STATE_INFO[0]
+    btnResetPressed = False
+    btnFlashPressed = False
     
     @staticmethod
     def resetScan():
