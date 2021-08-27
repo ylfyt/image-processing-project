@@ -4,13 +4,13 @@ import imutils
 import numpy as np
 
 class Camera:
-    def __init__(self, ipCam, width, height):
+    def __init__(self, ipCam, url, width, height):
         self.WIDTH = width
         self.HEIGHT = height
 
         self.fromIpCam = ipCam
         self.cap = 1
-        self.url = "http://192.168.43.189:8080/shot.jpg"
+        self.url = url
 
         if (not self.fromIpCam):
             self.cap = cv2.VideoCapture(0)

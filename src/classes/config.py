@@ -15,3 +15,9 @@ class Config:
                 mask = Mask(name=color['name'], low=color['lower'], high=color['upper'])
                 masks.append(mask)
         return masks
+    def getScanDuration():
+        f = open("config.json")
+        data = json.load(f)
+        f.close()
+
+        return data['scan-duration']

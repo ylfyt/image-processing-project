@@ -50,5 +50,6 @@
             "value" : 3,
             "desc" : "Aman"
         }
-    ]
+    ],
+    "scan-duration" : 5
 }
