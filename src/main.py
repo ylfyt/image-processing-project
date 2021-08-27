@@ -4,8 +4,8 @@ from classes.scan_state import ScanState
 from classes.mask import Mask
 from classes.config import Config
 import cv2
+import control as cl
 import time
-from classes.scan_state import ScanState
 
 def getPicture(frame):
     path = "../img/out.jpg"
@@ -90,6 +90,8 @@ while True:
             
     cv2.imshow("Camera", frame)
 
+    cl.controlBtn(frame)
+    
     key = cv2.waitKey(1)
     # Press Esc key to exit
     if (key == 27):
