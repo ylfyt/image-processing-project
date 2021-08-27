@@ -1,8 +1,14 @@
 from numpy import info
 from classes.camera import Camera
+from classes.scan_state import ScanState
 from classes.mask import Mask
 from classes.config import Config
 import cv2
+import time
+
+from classes.scan_state import ScanState
+
+
 
 def getPicture(frame):
     cv2.imwrite('../img/out.jpg', frame)
@@ -37,9 +43,9 @@ cam = Camera(ipCam=True, width=480, height=320)
 colorMasks = Config.getColorMasks()
 
 while True:
-    frame = cam.getVideo()
+    # frame = cam.getVideo()
 
-    # frame = cv2.imread("../img/1.jpg")
+    frame = cv2.imread("../img/1.jpg")
 
     hsv_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
@@ -51,13 +57,17 @@ while True:
     nMax = info[1]
 
     if (nMax > 750):
-        maxMask.drawContours(frame)
 
         meanRGB = cv2.mean(frame, maxMask.getMask())
         wavelength = getWaveLength(meanRGB[2], meanRGB[1], meanRGB[0])
         condition = getCondition(wavelength)
 
-        print(condition)
+        maxMask.drawContours(frame, condition)
+    
+    if (ScanState.isResetState()):
+        ScanState.setScanningState()
+
+    print(ScanState.getState())
 
     cv2.imshow("Camera", frame)
 
@@ -67,5 +77,7 @@ while True:
         break
     if(key == 32):
         getPicture(frame)
+    if (key == 115):
+        ScanState.setResetState()
   
 cv2.destroyAllWindows()

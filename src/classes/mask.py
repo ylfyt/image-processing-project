@@ -22,7 +22,7 @@ class Mask:
         contours = imutils.grab_contours(contours)
         return contours
 
-    def drawContours(self, frame):
+    def drawContours(self, frame, condition):
         con = self.getContours()
 
         areas = [cv2.contourArea(c) for c in con]
@@ -30,7 +30,6 @@ class Mask:
         for i in range(1, len(areas)):
             if (areas[idxMax] < areas[i]):
                 idxMax = i
-
 
         for idx, c in enumerate(con):
             area = cv2.contourArea(c)
@@ -41,6 +40,6 @@ class Mask:
                 cx = int(M["m10"]/M["m00"])
                 cy = int(M["m01"]/M["m00"])
 
-                # cv2.circle(frame, (cx, cy), 4, (255, 255, 255), -1)
+                cv2.circle(frame, (cx, cy), 4, (255, 255, 255), -1)
                 # cv2.putText(frame, self.name, (cx-0, cy-15), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), thickness=2)
-                cv2.putText(frame, self.name, (5, 15), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), thickness=1)
+                cv2.putText(frame, condition, (5, 22), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0), thickness=2)
