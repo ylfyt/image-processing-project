@@ -1,4 +1,3 @@
-from numpy import fabs, info
 from classes.camera import Camera
 from classes.scan_state import ScanState
 from classes.mask import Mask

@@ -4,6 +4,8 @@ from threading import *
 import RPi.GPIO as GPIO
 import cv2
 
+from classes.scan_state import ScanState
+
 GPIO.setmode(GPIO.BOARD)
 btnFlash=16      # flash
 btnPhoto=20      # take photo
@@ -42,15 +44,19 @@ def controlBtn(frame):
         Thread( target=signal(LED, flagLED, 1) ).start()
         Thread( target=signal(BUZZER, flagBuzzer, 1) ).start()
         
-    if GPIO.input(btnPhoto)==0:
-        print("btnPhoto Was Pressed:")
-        Thread( target=getPicture(frame))
-        Thread( target=signal(BUZZER, flagBuzzer, 2) ).start()
+    # if GPIO.input(btnPhoto)==0:
+    #     print("btnPhoto Was Pressed:")
+    #     Thread( target=getPicture(frame))
+    #     Thread( target=signal(BUZZER, flagBuzzer, 2) ).start()
         
     if GPIO.input(btnReset)==0:
         print("btnReset Was Pressed:")
         # clear class state
         Thread( target=signal(BUZZER, flagBuzzer, 1) ).start()
+        if (ScanState.isState("picture")):
+            ScanState.setIdleState()
+        elif (ScanState.isState("idle")):
+            ScanState.resetScan()
 
 
 
