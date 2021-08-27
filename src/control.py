@@ -34,9 +34,10 @@ def signal(indicator, flagSignal, repeat):
             sleep(0.5)
 
 def getPicture(frame, cond):
-    name = '{%Y-%m-%d %H:%M:%S}'.format(datetime.datetime.now()) + '_' + cond + '.jpg'
-    cv2.imwrite('img/' + name, frame)
+    path = '../img/' + '{%Y-%m-%d %H:%M:%S}'.format(datetime.datetime.now()) + '_' + cond + '.jpg'
+    cv2.imwrite(path, frame)
     print("Scanned")
+    return path
 
 def controlBtn(frame):
     if GPIO.input(btnFlash)==0:

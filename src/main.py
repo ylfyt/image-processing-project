@@ -6,11 +6,11 @@ import cv2
 import control as cl
 import time
 
-def getPicture(frame):
-    path = "../img/out.jpg"
-    cv2.imwrite(path, frame)
-    print("Success")
-    return path
+# def getPicture(frame):
+#     path = "../img/out.jpg"
+#     cv2.imwrite(path, frame)
+#     print("Success")
+#     return path
 
 def getWaveLength(r, g, b):
     red = int(r)
@@ -77,7 +77,7 @@ while True:
                     condition = "Aman"
                 maxMask.drawContours(frame, condition)
                 # TODO: Take a picture
-                output_path = getPicture(frame)
+                output_path = cl.getPicture(frame)
                 # TODO: Set to picture state
                 ScanState.setPictureState()
             else:
