@@ -2,10 +2,7 @@ from classes.camera import Camera
 from classes.mask import Mask
 from classes.config import Config
 import cv2
-
-def getPicture(frame):
-    cv2.imwrite('img/out.jpg', frame)
-    print("Success")
+import control as cl
 
 def getWaveLength(r, g, b):
     red = int(r)
@@ -49,11 +46,13 @@ while True:
 
     cv2.imshow("Camera", frame)
 
-    key = cv2.waitKey(1)
-    # Press Esc key to exit
-    if (key == 27):
-        break
-    if(key == 32):
-        getPicture(frame)
-  
+    cl.controlBtn(frame)
+
+    # key = cv2.waitKey(1)
+    # # Press Esc key to exit
+    # if (key == 27):
+    #     break
+    # if(key == 32):
+    #     getPicture(frame)
+
 cv2.destroyAllWindows()
