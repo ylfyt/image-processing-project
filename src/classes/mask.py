@@ -1,6 +1,9 @@
+from time import time
 import cv2
 import numpy as np
 import imutils
+
+from classes.scan_state import ScanState
 
 class Mask:
     def __init__(self, name, low, high):
@@ -31,6 +34,8 @@ class Mask:
             if (areas[idxMax] < areas[i]):
                 idxMax = i
 
+        textColor = (0, 0, 255)
+
         for idx, c in enumerate(con):
             area = cv2.contourArea(c)
             if (area > self.SIZE_OF_MIN_CONTOUR_AREA):
@@ -40,6 +45,27 @@ class Mask:
                 cx = int(M["m10"]/M["m00"])
                 cy = int(M["m01"]/M["m00"])
 
-                cv2.circle(frame, (cx, cy), 4, (255, 255, 255), -1)
+                # cv2.circle(frame, (cx, cy), 4, (255, 255, 255), -1)
                 # cv2.putText(frame, self.name, (cx-0, cy-15), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), thickness=2)
-                cv2.putText(frame, condition, (5, 22), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0), thickness=2)
+
+                if (condition != ""):
+                    cv2.putText(frame, condition, (5, 22), cv2.FONT_HERSHEY_SIMPLEX, 0.7, textColor, thickness=2)
+            else:
+                if (ScanState.isState("scanning")):
+                    if (condition != ""):
+                        cv2.putText(frame, condition, (5, 22), cv2.FONT_HERSHEY_SIMPLEX, 0.7, textColor, thickness=2)
+                
+                if (ScanState.isState("idle")):
+                    if (condition != ""):
+                        cv2.putText(frame, condition, (5, 22), cv2.FONT_HERSHEY_SIMPLEX, 0.7, textColor, thickness=2)
+
+        
+        if (len(con) == 0):
+            if (ScanState.isState("scanning")):
+                if (condition != ""):
+                    cv2.putText(frame, condition, (5, 22), cv2.FONT_HERSHEY_SIMPLEX, 0.7, textColor, thickness=2)
+
+            
+            if (ScanState.isState("idle")):
+                if (condition != ""):
+                    cv2.putText(frame, condition, (5, 22), cv2.FONT_HERSHEY_SIMPLEX, 0.7, textColor, thickness=2)

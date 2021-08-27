@@ -1,18 +1,17 @@
-from numpy import info
+from numpy import fabs, info
 from classes.camera import Camera
 from classes.scan_state import ScanState
 from classes.mask import Mask
 from classes.config import Config
 import cv2
 import time
-
 from classes.scan_state import ScanState
 
-
-
 def getPicture(frame):
-    cv2.imwrite('../img/out.jpg', frame)
+    path = "../img/out.jpg"
+    cv2.imwrite(path, frame)
     print("Success")
+    return path
 
 def getWaveLength(r, g, b):
     red = int(r)
@@ -39,45 +38,66 @@ def getMaxMask(masks):
     
     return [masks[idxMax], cv2.countNonZero(masks[idxMax].getMask())]
 
-cam = Camera(ipCam=True, width=480, height=320)
+def showOutput(path):
+    frame = cv2.imread(path)
+    cv2.putText(frame, "(Result)", (5, 45), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), thickness=2)
+    return frame
+
+cam = Camera(ipCam=True, url="http://192.168.43.166:8080/shot.jpg",width=480, height=320)
 colorMasks = Config.getColorMasks()
+output_path = ""
 
 while True:
-    # frame = cam.getVideo()
+    frame = 1
+    if (ScanState.isState("picture")):
+        frame = showOutput(output_path)
+    else:
+        frame = cam.getVideo()
+        # frame = cv2.imread("../img/1.jpg")
 
-    frame = cv2.imread("../img/1.jpg")
+    if (not ScanState.isState("picture")):
+        hsv_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
-    hsv_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+        for mask in colorMasks:
+            mask.updateFrame(frame=hsv_frame)
 
-    for mask in colorMasks:
-        mask.updateFrame(frame=hsv_frame)
+        info = getMaxMask(colorMasks)
+        maxMask = info[0]
+        nMax = info[1]
+        condition = ""
+        if (nMax > 750):
+            meanRGB = cv2.mean(frame, maxMask.getMask())
+            wavelength = getWaveLength(meanRGB[2], meanRGB[1], meanRGB[0])
+            condition = getCondition(wavelength)
 
-    info = getMaxMask(colorMasks)
-    maxMask = info[0]
-    nMax = info[1]
+            maxMask.drawContours(frame, "")
+        
+        if (ScanState.isState("scanning")):
+            if (ScanState.getScanTime() >= ScanState.SCAN_DURATION):
+                if (condition == ""):
+                    condition = "Aman"
+                maxMask.drawContours(frame, condition)
+                # TODO: Take a picture
+                output_path = getPicture(frame)
+                # TODO: Set to picture state
+                ScanState.setPictureState()
+            else:
+                maxMask.drawContours(frame, "Scanning...")
 
-    if (nMax > 750):
+        if (ScanState.isState("idle")):
+            maxMask.drawContours(frame, condition + "(idle)")
 
-        meanRGB = cv2.mean(frame, maxMask.getMask())
-        wavelength = getWaveLength(meanRGB[2], meanRGB[1], meanRGB[0])
-        condition = getCondition(wavelength)
-
-        maxMask.drawContours(frame, condition)
-    
-    if (ScanState.isResetState()):
-        ScanState.setScanningState()
-
-    print(ScanState.getState())
-
+            
     cv2.imshow("Camera", frame)
 
     key = cv2.waitKey(1)
     # Press Esc key to exit
     if (key == 27):
         break
-    if(key == 32):
-        getPicture(frame)
     if (key == 115):
-        ScanState.setResetState()
+        if (ScanState.isState("picture")):
+            ScanState.setIdleState()
+        elif (ScanState.isState("idle")):
+            ScanState.resetScan()
   
 cv2.destroyAllWindows()

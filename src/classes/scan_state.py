@@ -1,15 +1,16 @@
 import time
 
 class ScanState:
-    SCAN_DURATION = 10
+    SCAN_DURATION = 5
+    TAKE_PICTURE_DELAY = 1
     scanStartTime = time.time()
-    STATE_INFO = ["idle", "scanning", "reset"]
+    STATE_INFO = ["idle", "scanning", "picture"]
     state = STATE_INFO[0]
     
     @staticmethod
     def resetScan():
         ScanState.scanStartTime = time.time()
-        print("reset")
+        ScanState.setScanningState()
     
     def getScanTime():
         return time.time() - ScanState.scanStartTime
@@ -23,15 +24,9 @@ class ScanState:
     def setIdleState():
         ScanState.state = ScanState.STATE_INFO[0]
     
-    def setResetState():
+    def setPictureState():
         ScanState.state = ScanState.STATE_INFO[2]
     
-    def isResetState():
-        return ScanState.state == ScanState.STATE_INFO[2]
-    
-    def isIdleState():
-        return ScanState.state == ScanState.STATE_INFO[0]
-
-    def isScanningState():
-        return ScanState.state == ScanState.STATE_INFO[1]
+    def isState(st):
+        return ScanState.state == st
     
