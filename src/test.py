@@ -3,6 +3,7 @@ import datetime
 from threading import *
 # import RPi.GPIO as GPIO
 from gpiozero import Button
+from gpiozero import LED
 import cv2
 # from classes.scan_state import ScanState
 
@@ -36,8 +37,8 @@ btnFlash=Button(16)     # flash
 btnFlashPressed = False
 btnPhoto=20      # take photo
 btnReset= Button(21)
-LED=12           # LED
-BUZZER=18        # Buzzer
+ledToggle = LED(12)           # LED
+buzzerToggle = LED(26)
 # GPIO.setup(btnFlash,GPIO.IN,pull_up_down=GPIO.PUD_UP)
 # GPIO.setup(btnPhoto,GPIO.IN,pull_up_down=GPIO.PUD_UP)
 # GPIO.setup(btnReset,GPIO.IN,pull_up_down=GPIO.PUD_UP)
@@ -74,6 +75,7 @@ while True:
         print("btnFlash Was Pressed:")
         # Thread( target=signal(LED, flagLED, 1) ).start()
         # Thread( target=signal(BUZZER, flagBuzzer, 1) ).start()
+        ledToggle.on()
     btnFlashPressed = btnFlash.is_pressed
         
     if btnReset.is_pressed and not btnResetPressed:
