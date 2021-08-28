@@ -1,4 +1,4 @@
-from time import sleep
+from time import sleep, time
 import datetime
 from threading import *
 # import RPi.GPIO as GPIO
@@ -75,6 +75,9 @@ def ledSwitch(toggle):
 #     print("Scanned")
 #     return path
 
+def threadTest(param):
+    sleep(param)
+
 btnFlashPressed = False
 btnResetPressed = False
 
@@ -85,6 +88,7 @@ while True:
         Thread( target=ledSwitch(ledToggle) ).start()
         # Thread( target=signal(buzzerToggle, flagBuzzer, 10, 0.5) ).start()
         # ledToggle.on()
+        Thread(target=threadTest(5)).start()
     btnFlashPressed = btnFlash.is_pressed
         
     if btnReset.is_pressed and not btnResetPressed:
