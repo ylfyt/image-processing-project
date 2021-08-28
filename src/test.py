@@ -89,7 +89,7 @@ while True:
     if btnReset.is_pressed and not btnResetPressed:
         print("btnReset Was Pressed:")
         # clear class state
-        Thread( target=buzzerSignal(buzzerToggle, flagBuzzer, 6, 0.2) ).start()
+        Thread( target=buzzerSignal(buzzerToggle, 6, 0.2) ).start()
         # if (ScanState.isState("picture")):
         #     ScanState.setIdleState()
         # elif (ScanState.isState("idle")):
