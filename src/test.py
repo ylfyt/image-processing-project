@@ -50,15 +50,15 @@ flagBuzzer=False
 
 # class state
 
-def buzzerSignal(toggle, repeat, speed):
+def buzzerSignal(repeat, speed):
     flagSignal = False
     for i in range(repeat):
         if flagSignal==False:
-            toggle.on()
+            buzzerToggle.on()
             flagSignal=True
             sleep(speed)
         else:
-            toggle.off()
+            buzzerToggle.off()
             flagSignal=False
             sleep(speed)
 
@@ -90,7 +90,7 @@ while True:
     if btnReset.is_pressed and not btnResetPressed:
         print("btnReset Was Pressed:")
         # clear class state
-        Thread( target=buzzerSignal(buzzerToggle, 2, 3) ).start()
+        Thread( target=buzzerSignal(2, 3) ).start()
         # if (ScanState.isState("picture")):
         #     ScanState.setIdleState()
         # elif (ScanState.isState("idle")):
