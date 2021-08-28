@@ -50,7 +50,6 @@ output_path = ""
 Thread(target=cl.btnControl).start()
 
 while True:
-    initTime = time.time()
     frame = 1
     if (ScanState.isState("picture")):
         frame = showOutput(output_path)
@@ -92,9 +91,6 @@ while True:
 
             
     cv2.imshow("Camera", frame)
-
-    print(time.time() - initTime)
-    # cl.btnControl()
     
     key = cv2.waitKey(1)
     # Press Esc key to exit
