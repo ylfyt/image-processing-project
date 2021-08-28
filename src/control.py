@@ -46,7 +46,7 @@ def ledSwitch():
 
 def getPicture(frame, cond):
     current = datetime.datetime.now()
-    path = '../img/' + current + '_' + cond + '.jpg'
+    path = '../img/' + str(current) + '_' + cond + '.jpg'
     cv2.imwrite(path, frame)
     print("Scanned")
     return path
