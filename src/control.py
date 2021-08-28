@@ -10,7 +10,6 @@ from classes.scan_state import ScanState
 
 # GPIO.setmode(GPIO.BOARD)
 btnFlash=Button(12)     # flash
-btnFlashPressed = False
 btnPhoto=20      # take photo
 btnReset= Button(16)
 ledToggle = LED(20)           # LED
@@ -45,14 +44,14 @@ def ledSwitch():
         ScanState.ledToggle.off()
     ScanState.ledFlag = not ScanState.ledFlag
 
-# def getPicture(frame, cond):
-#     path = '../img/' + '{%Y-%m-%d %H:%M:%S}'.format(datetime.datetime.now()) + '_' + cond + '.jpg'
-#     cv2.imwrite(path, frame)
-#     print("Scanned")
-#     return path
+def getPicture(frame, cond):
+    path = '../img/' + '{%Y-%m-%d %H:%M:%S}'.format(datetime.datetime.now()) + '_' + cond + '.jpg'
+    cv2.imwrite(path, frame)
+    print("Scanned")
+    return path
 
-btnFlashPressed = False
-btnResetPressed = False
+# btnFlashPressed = False
+# btnResetPressed = False
 
 def btnControl():
     if btnFlash.is_pressed and btnFlash.is_pressed != ScanState.btnFlashPressed:
