@@ -14,6 +14,8 @@ class ScanState:
     buzzerToggle = 1
     buzzerDelay = 0.5
     buzzerRepeat = 4
+
+    exitProgram = False
     
     @staticmethod
     def resetScan():

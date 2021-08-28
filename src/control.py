@@ -61,6 +61,10 @@ def getPicture(frame, cond):
 # btnResetPressed = False
 
 def btnControl():
+
+    btnResetTimer = 5
+    prevPressed = time()
+
     while True:
         if btnFlash.is_pressed and btnFlash.is_pressed != ScanState.btnFlashPressed:
             print("btnFlash Was Pressed:")
@@ -78,5 +82,11 @@ def btnControl():
                 onBuzzer(2, 0.15)
                 ScanState.resetScan()
         ScanState.btnResetPressed = btnReset.is_pressed
+
+        if (btnReset.is_pressed):
+            if (time() - prevPressed >= btnResetTimer):
+                print("off")
+        else:
+            prevPressed = time()
 
         sleep(0.06)
