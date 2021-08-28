@@ -79,7 +79,7 @@ btnFlashPressed = False
 btnResetPressed = False
 
 while True:
-    print('State: ', end="")
+    # print('State: ', end="")
     if btnFlash.is_pressed and not btnFlashPressed:
         print("btnFlash Was Pressed:")
         ScanState.ledToggle = ledToggle
@@ -100,6 +100,6 @@ while True:
         # elif (ScanState.isState("idle")):
         #     ScanState.resetScan()
     btnResetPressed = btnReset.is_pressed
-    print()
+    # print()
 
 
