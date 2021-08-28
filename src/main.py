@@ -82,6 +82,7 @@ while True:
                 # TODO: Take a picture
                 output_path = cl.getPicture(frame, condition)
                 # TODO: Set to picture state
+                cl.onBuzzer(3, 0.15)
                 ScanState.setPictureState()
             else:
                 maxMask.drawContours(frame, "Scanning...")

@@ -44,6 +44,12 @@ def ledSwitch():
         ScanState.ledToggle.off()
     ScanState.ledFlag = not ScanState.ledFlag
 
+def onBuzzer(num, delay):
+    ScanState.buzzerToggle = buzzerToggle
+    ScanState.buzzerDelay = delay
+    ScanState.buzzerRepeat = num * 2
+    Thread( target=buzzerSignal ).start()
+
 def getPicture(frame, cond):
     current = datetime.datetime.now()
     path = '../img/' + str(current) + '_' + cond + '.jpg'
@@ -66,16 +72,10 @@ def btnControl():
             print("btnReset Was Pressed:")
             # clear class state
             if (ScanState.isState("picture")):
-                ScanState.buzzerToggle = buzzerToggle
-                ScanState.buzzerDelay = 0.2
-                ScanState.buzzerRepeat = 4
-                Thread( target=buzzerSignal ).start()
+                onBuzzer(1, 0.5)
                 ScanState.setIdleState()
             elif (ScanState.isState("idle")):
-                ScanState.buzzerToggle = buzzerToggle
-                ScanState.buzzerDelay = 0.5
-                ScanState.buzzerRepeat = 2
-                Thread( target=buzzerSignal ).start()
+                onBuzzer(2, 0.15)
                 ScanState.resetScan()
         ScanState.btnResetPressed = btnReset.is_pressed
 
