@@ -47,6 +47,7 @@ colorMasks = Config.getColorMasks()
 output_path = ""
 
 while True:
+    
     frame = 1
     if (ScanState.isState("picture")):
         frame = showOutput(output_path)

@@ -60,7 +60,7 @@ def btnControl():
         Thread( target=ledSwitch ).start()
     ScanState.btnFlashPressed = btnFlash.is_pressed
         
-    if btnReset.is_pressed and btnReset.is_pressed != ScanState.btnResetPressed and ScanState.isState("scanning"):
+    if btnReset.is_pressed and btnReset.is_pressed != ScanState.btnResetPressed and not ScanState.isState("scanning"):
         print("btnReset Was Pressed:")
         # clear class state
         if (ScanState.isState("picture")):
