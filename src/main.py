@@ -89,7 +89,7 @@ while True:
             
     cv2.imshow("Camera", frame)
 
-    cl.controlBtn(frame)
+    cl.btnControl()
     
     key = cv2.waitKey(1)
     # Press Esc key to exit

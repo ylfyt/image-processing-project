@@ -1,34 +1,11 @@
-from time import sleep
+from time import sleep, time
 import datetime
 from threading import *
 # import RPi.GPIO as GPIO
 from gpiozero import Button
+from gpiozero import LED
 import cv2
 from classes.scan_state import ScanState
-
-# from gpiozero import Button
-# from time import sleep
-
-# button = Button(6)
-
-# while True:
-#     if button.is_pressed:
-#         print("Button is pressed")
-#     else:
-#         print("Button is not pressed")
-
-#     sleep(1)
-
-# from gpiozero import LED
-# from time import sleep
-
-# led = LED(24)
-
-# while True:
-#     led.on()
-#     sleep(1)
-#     led.off()
-#     sleep(1)
 
 
 # GPIO.setmode(GPIO.BOARD)
@@ -36,8 +13,8 @@ btnFlash=Button(16)     # flash
 btnFlashPressed = False
 btnPhoto=20      # take photo
 btnReset= Button(21)
-LED=12           # LED
-BUZZER=18        # Buzzer
+ledToggle = LED(12)           # LED
+buzzerToggle = LED(26)
 # GPIO.setup(btnFlash,GPIO.IN,pull_up_down=GPIO.PUD_UP)
 # GPIO.setup(btnPhoto,GPIO.IN,pull_up_down=GPIO.PUD_UP)
 # GPIO.setup(btnReset,GPIO.IN,pull_up_down=GPIO.PUD_UP)
@@ -49,39 +26,55 @@ flagBuzzer=False
 
 # class state
 
-def signal(indicator, flagSignal, repeat):
-    for i in range(repeat):
+def buzzerSignal():
+    flagSignal = False
+    for i in range(ScanState.buzzerRepeat):
         if flagSignal==False:
-            GPIO.output(indicator,True)
+            ScanState.buzzerToggle.on()
             flagSignal=True
-            sleep(0.5)
+            sleep(ScanState.buzzerDelay)
         else:
-            GPIO.output(indicator, False)
+            ScanState.buzzerToggle.off()
             flagSignal=False
-            sleep(0.5)
+            sleep(ScanState.buzzerDelay)
 
-def getPicture(frame, cond):
-    path = '../img/' + '{%Y-%m-%d %H:%M:%S}'.format(datetime.datetime.now()) + '_' + cond + '.jpg'
-    cv2.imwrite(path, frame)
-    print("Scanned")
-    return path
+def ledSwitch():
+    if (ScanState.ledFlag == False):
+        ScanState.ledToggle.on()
+    else:
+        ScanState.ledToggle.off()
+    ScanState.ledFlag = not ScanState.ledFlag
 
-def controlBtn(frame):
-    if btnFlash.is_pressed and not ScanState.btnFlashPressed:
+# def getPicture(frame, cond):
+#     path = '../img/' + '{%Y-%m-%d %H:%M:%S}'.format(datetime.datetime.now()) + '_' + cond + '.jpg'
+#     cv2.imwrite(path, frame)
+#     print("Scanned")
+#     return path
+
+btnFlashPressed = False
+btnResetPressed = False
+
+def btnControl():
+    if btnFlash.is_pressed and not btnFlashPressed:
         print("btnFlash Was Pressed:")
-        Thread( target=signal(LED, flagLED, 1) ).start()
-        Thread( target=signal(BUZZER, flagBuzzer, 1) ).start()
+        ScanState.ledToggle = ledToggle
+        Thread( target=ledSwitch ).start()
     ScanState.btnFlashPressed = btnFlash.is_pressed
         
-    if btnReset.is_pressed and not ScanState.btnResetPressed:
+    if btnReset.is_pressed and not btnResetPressed and ScanState.isState("scanning"):
         print("btnReset Was Pressed:")
         # clear class state
-        Thread( target=signal(BUZZER, flagBuzzer, 1) ).start()
         if (ScanState.isState("picture")):
+            ScanState.buzzerToggle = buzzerToggle
+            ScanState.buzzerDelay = 0.2
+            ScanState.buzzerRepeat = 4
+            Thread( target=buzzerSignal ).start()
             ScanState.setIdleState()
         elif (ScanState.isState("idle")):
+            ScanState.buzzerToggle = buzzerToggle
+            ScanState.buzzerDelay = 0.5
+            ScanState.buzzerRepeat = 2
+            Thread( target=buzzerSignal ).start()
             ScanState.resetScan()
     ScanState.btnResetPressed = btnReset.is_pressed
-
-
 
