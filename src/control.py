@@ -56,7 +56,6 @@ def getPicture(frame, cond):
 
 def btnControl():
     while True:
-        print("ini thread btn")
         if btnFlash.is_pressed and btnFlash.is_pressed != ScanState.btnFlashPressed:
             print("btnFlash Was Pressed:")
             ScanState.ledToggle = ledToggle
