@@ -55,26 +55,29 @@ def getPicture(frame, cond):
 # btnResetPressed = False
 
 def btnControl():
-    if btnFlash.is_pressed and btnFlash.is_pressed != ScanState.btnFlashPressed:
-        print("btnFlash Was Pressed:")
-        ScanState.ledToggle = ledToggle
-        Thread( target=ledSwitch ).start()
-    ScanState.btnFlashPressed = btnFlash.is_pressed
-        
-    if btnReset.is_pressed and btnReset.is_pressed != ScanState.btnResetPressed and not ScanState.isState("scanning"):
-        print("btnReset Was Pressed:")
-        # clear class state
-        if (ScanState.isState("picture")):
-            ScanState.buzzerToggle = buzzerToggle
-            ScanState.buzzerDelay = 0.2
-            ScanState.buzzerRepeat = 4
-            Thread( target=buzzerSignal ).start()
-            ScanState.setIdleState()
-        elif (ScanState.isState("idle")):
-            ScanState.buzzerToggle = buzzerToggle
-            ScanState.buzzerDelay = 0.5
-            ScanState.buzzerRepeat = 2
-            Thread( target=buzzerSignal ).start()
-            ScanState.resetScan()
-    ScanState.btnResetPressed = btnReset.is_pressed
+    while True:
+        print("ini thread btn")
+        if btnFlash.is_pressed and btnFlash.is_pressed != ScanState.btnFlashPressed:
+            print("btnFlash Was Pressed:")
+            ScanState.ledToggle = ledToggle
+            Thread( target=ledSwitch ).start()
+        ScanState.btnFlashPressed = btnFlash.is_pressed
+            
+        if btnReset.is_pressed and btnReset.is_pressed != ScanState.btnResetPressed and not ScanState.isState("scanning"):
+            print("btnReset Was Pressed:")
+            # clear class state
+            if (ScanState.isState("picture")):
+                ScanState.buzzerToggle = buzzerToggle
+                ScanState.buzzerDelay = 0.2
+                ScanState.buzzerRepeat = 4
+                Thread( target=buzzerSignal ).start()
+                ScanState.setIdleState()
+            elif (ScanState.isState("idle")):
+                ScanState.buzzerToggle = buzzerToggle
+                ScanState.buzzerDelay = 0.5
+                ScanState.buzzerRepeat = 2
+                Thread( target=buzzerSignal ).start()
+                ScanState.resetScan()
+        ScanState.btnResetPressed = btnReset.is_pressed
 
+        sleep(0.06)

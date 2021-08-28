@@ -47,7 +47,7 @@ colorMasks = Config.getColorMasks()
 output_path = ""
 
 while True:
-    initTime = time.time()
+    # initTime = time.time()
     frame = 1
     if (ScanState.isState("picture")):
         frame = showOutput(output_path)
@@ -90,7 +90,7 @@ while True:
             
     cv2.imshow("Camera", frame)
 
-    print(time.time() - initTime)
+    # print(time.time() - initTime)
     cl.btnControl()
     
     key = cv2.waitKey(1)
