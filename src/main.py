@@ -42,7 +42,7 @@ def showOutput(path):
     cv2.putText(frame, "(Result)", (5, 45), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), thickness=2)
     return frame
 
-cam = Camera(ipCam=True, url="http://192.168.43.190:8080/shot.jpg",width=480, height=320)
+cam = Camera(ipCam=True, url="http://192.168.43.218:8080/shot.jpg",width=480, height=320)
 colorMasks = Config.getColorMasks()
 output_path = ""
 
