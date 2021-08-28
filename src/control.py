@@ -9,12 +9,12 @@ from classes.scan_state import ScanState
 
 
 # GPIO.setmode(GPIO.BOARD)
-btnFlash=Button(16)     # flash
+btnFlash=Button(12)     # flash
 btnFlashPressed = False
 btnPhoto=20      # take photo
-btnReset= Button(21)
-ledToggle = LED(12)           # LED
-buzzerToggle = LED(26)
+btnReset= Button(16)
+ledToggle = LED(20)           # LED
+buzzerToggle = LED(21)
 # GPIO.setup(btnFlash,GPIO.IN,pull_up_down=GPIO.PUD_UP)
 # GPIO.setup(btnPhoto,GPIO.IN,pull_up_down=GPIO.PUD_UP)
 # GPIO.setup(btnReset,GPIO.IN,pull_up_down=GPIO.PUD_UP)
