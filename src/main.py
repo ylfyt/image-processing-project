@@ -43,7 +43,7 @@ def showOutput(path):
     cv2.putText(frame, "(Result)", (5, 45), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), thickness=2)
     return frame
 
-cam = Camera(ipCam=True, url="http://192.168.43.218:8080/shot.jpg",width=480, height=320)
+cam = Camera(ipCam=False, url="http://192.168.43.218:8080/shot.jpg",width=480, height=320)
 colorMasks = Config.getColorMasks()
 output_path = ""
 
@@ -54,8 +54,8 @@ while True:
     if (ScanState.isState("picture")):
         frame = showOutput(output_path)
     else:
-        # frame = cam.getVideo()
-        frame = cv2.imread("../img/1.jpg")
+        frame = cam.getVideo()
+        # frame = cv2.imread("../img/1.jpg")
 
     if (not ScanState.isState("picture")):
         hsv_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
