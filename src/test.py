@@ -73,7 +73,7 @@ btnResetPressed = False
 while True:
     if btnFlash.is_pressed and not btnFlashPressed:
         print("btnFlash Was Pressed:")
-        Thread( target=signal(ledToggle, flagLED, 1) ).start()
+        Thread( target=signal(ledToggle, flagLED, 10) ).start()
         # Thread( target=signal(BUZZER, flagBuzzer, 1) ).start()
         # ledToggle.on()
     btnFlashPressed = btnFlash.is_pressed
