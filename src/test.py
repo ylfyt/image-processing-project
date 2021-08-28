@@ -81,6 +81,7 @@ prevFlash = False
 while True:
     # print('State: ', end="")
     flashState = btnFlash.is_pressed
+    print(flashState)
     if flashState and prevFlash != flashState:
         print("btnFlash Was Pressed:")
         ScanState.ledToggle = ledToggle
