@@ -9,6 +9,11 @@ class ScanState:
     btnResetPressed = False
     btnFlashPressed = False
     ledFlag = False
+
+    ledToggle = 1
+    buzzerToggle = 1
+    buzzerDelay = 0.5
+    buzzerRepeat = 4
     
     @staticmethod
     def resetScan():
