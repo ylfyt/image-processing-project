@@ -47,7 +47,7 @@ colorMasks = Config.getColorMasks()
 output_path = ""
 
 while True:
-    
+    initTime = time.time()
     frame = 1
     if (ScanState.isState("picture")):
         frame = showOutput(output_path)
@@ -78,7 +78,7 @@ while True:
                     condition = "Aman"
                 maxMask.drawContours(frame, condition)
                 # TODO: Take a picture
-                output_path = cl.getPicture(frame)
+                output_path = cl.getPicture(frame, condition)
                 # TODO: Set to picture state
                 ScanState.setPictureState()
             else:
@@ -90,6 +90,7 @@ while True:
             
     cv2.imshow("Camera", frame)
 
+    print(time.time() - initTime)
     cl.btnControl()
     
     key = cv2.waitKey(1)
