@@ -92,8 +92,8 @@ while True:
         print("btnReset Was Pressed:")
         # clear class state
         ScanState.buzzerToggle = buzzerToggle
-        ScanState.buzzerDelay = 3
-        ScanState.buzzerRepeat = 4
+        ScanState.buzzerDelay = 0.3
+        ScanState.buzzerRepeat = 6
         Thread( target=buzzerSignal ).start()
         # if (ScanState.isState("picture")):
         #     ScanState.setIdleState()
