@@ -1,3 +1,4 @@
+from threading import Thread
 from classes.camera import Camera
 from classes.scan_state import ScanState
 from classes.mask import Mask
@@ -46,8 +47,10 @@ cam = Camera(ipCam=True, url="http://192.168.43.218:8080/shot.jpg",width=480, he
 colorMasks = Config.getColorMasks()
 output_path = ""
 
+Thread(target=cl.btnControl).start()
+
 while True:
-    # initTime = time.time()
+    initTime = time.time()
     frame = 1
     if (ScanState.isState("picture")):
         frame = showOutput(output_path)
@@ -90,8 +93,8 @@ while True:
             
     cv2.imshow("Camera", frame)
 
-    # print(time.time() - initTime)
-    cl.btnControl()
+    print(time.time() - initTime)
+    # cl.btnControl()
     
     key = cv2.waitKey(1)
     # Press Esc key to exit
