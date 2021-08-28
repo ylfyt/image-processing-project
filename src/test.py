@@ -50,16 +50,16 @@ flagBuzzer=False
 
 # class state
 
-def signal(indicator, flagSignal, repeat):
+def signal(indicator, flagSignal, repeat, speed):
     for i in range(repeat):
         if flagSignal==False:
             indicator.on()
             flagSignal=True
-            sleep(0.5)
+            sleep(speed)
         else:
             indicator.off()
             flagSignal=False
-            sleep(0.5)
+            sleep(speed)
 
 # def getPicture(frame, cond):
 #     path = '../img/' + '{%Y-%m-%d %H:%M:%S}'.format(datetime.datetime.now()) + '_' + cond + '.jpg'
@@ -73,15 +73,15 @@ btnResetPressed = False
 while True:
     if btnFlash.is_pressed and not btnFlashPressed:
         print("btnFlash Was Pressed:")
-        Thread( target=signal(ledToggle, flagLED, 10) ).start()
-        # Thread( target=signal(BUZZER, flagBuzzer, 1) ).start()
+        Thread( target=signal(ledToggle, flagLED, 1, 0.5) ).start()
+        # Thread( target=signal(buzzerToggle, flagBuzzer, 10, 0.5) ).start()
         # ledToggle.on()
     btnFlashPressed = btnFlash.is_pressed
         
     if btnReset.is_pressed and not btnResetPressed:
         print("btnReset Was Pressed:")
         # clear class state
-        # Thread( target=signal(BUZZER, flagBuzzer, 1) ).start()
+        Thread( target=signal(buzzerToggle, flagBuzzer, 6, 0.2) ).start()
         # if (ScanState.isState("picture")):
         #     ScanState.setIdleState()
         # elif (ScanState.isState("idle")):
