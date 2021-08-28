@@ -5,7 +5,7 @@ from threading import *
 from gpiozero import Button
 from gpiozero import LED
 import cv2
-# from classes.scan_state import ScanState
+from classes.scan_state import ScanState
 
 # from gpiozero import Button
 # from time import sleep
@@ -62,12 +62,12 @@ def buzzerSignal(toggle, repeat, speed):
             flagSignal=False
             sleep(speed)
 
-def ledSwitch(toggle, flagLED):
-    if (flagLED == False):
+def ledSwitch(toggle):
+    if (ScanState.ledFlag == False):
         toggle.on()
     else:
         toggle.off()
-    flagLED = not flagLED
+    ScanState.ledFlag = not ScanState.ledFlag
 
 # def getPicture(frame, cond):
 #     path = '../img/' + '{%Y-%m-%d %H:%M:%S}'.format(datetime.datetime.now()) + '_' + cond + '.jpg'

@@ -8,6 +8,7 @@ class ScanState:
     state = STATE_INFO[0]
     btnResetPressed = False
     btnFlashPressed = False
+    ledFlag = False
     
     @staticmethod
     def resetScan():
