@@ -45,7 +45,8 @@ def ledSwitch():
     ScanState.ledFlag = not ScanState.ledFlag
 
 def getPicture(frame, cond):
-    path = '../img/' + '{%Y-%m-%d %H:%M:%S}'.format(datetime.datetime.now()) + '_' + cond + '.jpg'
+    current = datetime.datetime.now()
+    path = '../img/' + current + '_' + cond + '.jpg'
     cv2.imwrite(path, frame)
     print("Scanned")
     return path
