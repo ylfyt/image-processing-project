@@ -50,16 +50,16 @@ flagBuzzer=False
 
 # class state
 
-# def signal(indicator, flagSignal, repeat):
-#     for i in range(repeat):
-#         if flagSignal==False:
-#             GPIO.output(indicator,True)
-#             flagSignal=True
-#             sleep(0.5)
-#         else:
-#             GPIO.output(indicator, False)
-#             flagSignal=False
-#             sleep(0.5)
+def signal(indicator, flagSignal, repeat):
+    for i in range(repeat):
+        if flagSignal==False:
+            indicator.on()
+            flagSignal=True
+            sleep(0.5)
+        else:
+            indicator.off()
+            flagSignal=False
+            sleep(0.5)
 
 # def getPicture(frame, cond):
 #     path = '../img/' + '{%Y-%m-%d %H:%M:%S}'.format(datetime.datetime.now()) + '_' + cond + '.jpg'
@@ -73,9 +73,9 @@ btnResetPressed = False
 while True:
     if btnFlash.is_pressed and not btnFlashPressed:
         print("btnFlash Was Pressed:")
-        # Thread( target=signal(LED, flagLED, 1) ).start()
+        Thread( target=signal(ledToggle, flagLED, 1) ).start()
         # Thread( target=signal(BUZZER, flagBuzzer, 1) ).start()
-        ledToggle.on()
+        # ledToggle.on()
     btnFlashPressed = btnFlash.is_pressed
         
     if btnReset.is_pressed and not btnResetPressed:
