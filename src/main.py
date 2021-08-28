@@ -43,7 +43,13 @@ def showOutput(path):
     cv2.putText(frame, "(Result)", (5, 45), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), thickness=2)
     return frame
 
-cam = Camera(ipCam=False, url="http://192.168.43.218:8080/shot.jpg",width=480, height=320)
+
+ScanState.SCAN_DURATION = Config.getScanDuration()
+camConfig = Config.getCamConfig()
+ip = False
+if (camConfig['ipcam'] == 'true'):
+    ip = True
+cam = Camera(ipCam=ip, url="http://" + camConfig['ip'] + "/shot.jpg",width=camConfig['width'], height=camConfig['height'])
 colorMasks = Config.getColorMasks()
 output_path = ""
 

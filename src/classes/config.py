@@ -21,3 +21,10 @@ class Config:
         f.close()
 
         return data['scan-duration']
+    
+    def getCamConfig():
+        f = open("config.json")
+        data = json.load(f)
+        f.close()
+
+        return data['camera-config']
