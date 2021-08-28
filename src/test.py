@@ -75,20 +75,22 @@ def ledSwitch():
 #     print("Scanned")
 #     return path
 
-btnFlashPressed = False
-btnResetPressed = False
+prevReset = False
+prevFlash = False
 
 while True:
     # print('State: ', end="")
-    if btnFlash.is_pressed and not btnFlashPressed:
+    flashState = btnFlash.is_pressed
+    if flashState and prevFlash != flashState:
         print("btnFlash Was Pressed:")
         ScanState.ledToggle = ledToggle
         Thread( target=ledSwitch ).start()
         # Thread( target=signal(buzzerToggle, flagBuzzer, 10, 0.5) ).start()
         # ledToggle.on()
-    btnFlashPressed = btnFlash.is_pressed
-        
-    if btnReset.is_pressed and not btnResetPressed:
+    prevFlash = flashState
+    
+    resetState = btnReset.is_pressed
+    if resetState and resetState != prevReset:
         print("btnReset Was Pressed:")
         # clear class state
         ScanState.buzzerToggle = buzzerToggle
@@ -99,7 +101,7 @@ while True:
         #     ScanState.setIdleState()
         # elif (ScanState.isState("idle")):
         #     ScanState.resetScan()
-    btnResetPressed = btnReset.is_pressed
+    prevReset = resetState
     # print()
 
 
