@@ -99,6 +99,9 @@ while True:
             
     cv2.imshow("Camera", frame)
     
+    if (ScanState.exitProgram):
+        break
+
     key = cv2.waitKey(1)
     # Press Esc key to exit
     if (key == 27):

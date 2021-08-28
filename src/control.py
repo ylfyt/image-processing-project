@@ -62,7 +62,7 @@ def getPicture(frame, cond):
 
 def btnControl():
 
-    btnResetTimer = 5
+    btnResetTimer = 3
     prevPressed = time()
 
     while True:
@@ -85,8 +85,11 @@ def btnControl():
 
         if (btnReset.is_pressed):
             if (time() - prevPressed >= btnResetTimer):
-                print("off")
+                ScanState.exitProgram = True
         else:
             prevPressed = time()
+
+        if (ScanState.exitProgram):
+            break
 
         sleep(0.06)
