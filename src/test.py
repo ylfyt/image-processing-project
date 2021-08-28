@@ -81,7 +81,7 @@ btnResetPressed = False
 while True:
     if btnFlash.is_pressed and not btnFlashPressed:
         print("btnFlash Was Pressed:")
-        Thread( target=ledSwitch(ledToggle, flagLED) ).start()
+        Thread( target=ledSwitch(ledToggle) ).start()
         # Thread( target=signal(buzzerToggle, flagBuzzer, 10, 0.5) ).start()
         # ledToggle.on()
     btnFlashPressed = btnFlash.is_pressed
@@ -89,7 +89,7 @@ while True:
     if btnReset.is_pressed and not btnResetPressed:
         print("btnReset Was Pressed:")
         # clear class state
-        Thread( target=buzzerSignal(buzzerToggle, 6, 0.2) ).start()
+        Thread( target=buzzerSignal(buzzerToggle, 1, 1) ).start()
         # if (ScanState.isState("picture")):
         #     ScanState.setIdleState()
         # elif (ScanState.isState("idle")):
