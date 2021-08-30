@@ -75,6 +75,7 @@ while True:
         if (nMax > 750):
             meanRGB = cv2.mean(frame, maxMask.getMask())
             hsvCode = colorsys.rgb_to_hsv(meanRGB[2], meanRGB[1], meanRGB[0])
+            hsvCode = (hsvCode[0]*255, hsvCode[1]*255, hsvCode[2])
             condition = getCondition(hsvCode)
 
             condition += " | " + str(round(hsvCode[0])) +  " " + str(round(hsvCode[1])) +  " " + str(round(hsvCode[2])) 
