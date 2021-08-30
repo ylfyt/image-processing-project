@@ -76,9 +76,7 @@ while True:
             meanRGB = cv2.mean(frame, maxMask.getMask())
             hsvCode = colorsys.rgb_to_hsv(meanRGB[2], meanRGB[1], meanRGB[0])
             condition = getCondition(hsvCode)
-
-            condition += " | " + str(round(r)) +  " " + str(round(g)) +  " " + str(round(b)) 
-
+            
             maxMask.drawContours(frame, "")
         
         if (ScanState.isState("scanning")):
