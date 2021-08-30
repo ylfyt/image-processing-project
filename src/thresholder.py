@@ -1,3 +1,6 @@
+
+
+
 import cv2
 import numpy as np
 
@@ -5,7 +8,7 @@ def nothing(x):
     pass
 
 # Load image
-image = cv2.imread('1.jpg')
+image = cv2.imread('../img/hsv_grafik.png')
 
 # Create a window
 cv2.namedWindow('image')
