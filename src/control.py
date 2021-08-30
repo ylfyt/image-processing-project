@@ -67,8 +67,6 @@ def btnControl():
     timerDutarion = Config.getTimerDuration()
     btnResetExitTimer = timerDutarion['exit']
     btnResetShutdownTimer = timerDutarion['shutdown']
-    print(btnResetExitTimer)
-    print(btnResetShutdownTimer)
     timeCounter = 0
     prevPressed = time()
 
@@ -93,13 +91,11 @@ def btnControl():
         if (btnReset.is_pressed):
             timeCounter = time() - prevPressed
             if (timeCounter >= btnResetShutdownTimer):
-                print("Shutdown")
-                # call("sudo nohup shutdown -h now", shell=True)
-                # ScanState.exitProgram = True
+                call("sudo nohup shutdown -h now", shell=True)
+                ScanState.exitProgram = True
         else:
             if (timeCounter >= btnResetExitTimer):
-                print("exit")
-                # ScanState.exitProgram = True
+                ScanState.exitProgram = True
             timeCounter = 0
             prevPressed = time()
     
