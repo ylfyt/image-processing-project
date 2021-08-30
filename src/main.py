@@ -7,26 +7,24 @@ import cv2
 import control as cl
 import time
 
-# def getPicture(frame):
-#     path = "../img/out.jpg"
-#     cv2.imwrite(path, frame)
-#     print("Success")
-#     return path
+conditionRange = Config.getCondition()
 
-def getWaveLength(r, g, b):
-    red = int(r)
-    green = int(g)
-    blue = int(b)
-    return red * green * blue
+def getCondition(r, g, b):
+    for cond in conditionRange:
+        rgbLower = cond['lower']
+        rLower = rgbLower[0]
+        gLower = rgbLower[1]
+        bLower = rgbLower[2]
 
-def getCondition(wavelength):
-    aaa = 0
-    if (aaa == 1):
-        return "Parah"
-    elif (aaa == 2):
-        return "Tidak parah"
-    else:
-        return "Santuy"
+        rgbUpper = cond['upper']
+        rUpper = rgbUpper[0]
+        gUpper = rgbUpper[1]
+        bUpper = rgbUpper[2]
+
+        if (rLower <= r <= rUpper and gLower <= g <= gUpper and bLower <= b <= bUpper):
+            return cond['desc']
+    
+    return "Unknown"
 
 def getMaxMask(masks):
     idxMax = 0
@@ -75,8 +73,7 @@ while True:
         condition = ""
         if (nMax > 750):
             meanRGB = cv2.mean(frame, maxMask.getMask())
-            wavelength = getWaveLength(meanRGB[2], meanRGB[1], meanRGB[0])
-            condition = getCondition(wavelength)
+            condition = getCondition(meanRGB[2], meanRGB[1], meanRGB[0])
 
             maxMask.drawContours(frame, "")
         

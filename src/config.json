@@ -15,16 +15,24 @@
     ],
     "conditions" : [
         {
-            "value" : 1,
-            "desc" : "Parah"
+            "lower" : [255, 153, 0],
+            "upper" : [255, 204, 0],
+            "desc" : "LOW"
         },
         {
-            "value" : 2,
-            "desc" : "Tidak Parah"
+            "lower" : [255, 128, 0],
+            "upper" : [255, 153, 0],
+            "desc" : "NORMAL"
         },
         {
-            "value" : 3,
-            "desc" : "Aman"
+            "lower" : [255, 77, 0],
+            "upper" : [255, 128, 0],
+            "desc" : "MEDIUM"
+        },
+        {
+            "lower" : [255, 0, 0],
+            "upper" : [255, 77, 0],
+            "desc" : "HIGH"
         }
     ],
     "scan-duration" : 5,
