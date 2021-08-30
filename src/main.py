@@ -115,3 +115,4 @@ while True:
             ScanState.resetScan()
   
 cv2.destroyAllWindows()
+exit()
