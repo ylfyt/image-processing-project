@@ -96,8 +96,8 @@ while True:
         if (ScanState.isState("idle")):
             maxMask.drawContours(frame, condition + "(idle)")
 
-    # cv2.namedWindow("Camera", cv2.WND_PROP_FULLSCREEN)
-    # cv2.setWindowProperty("Camera",cv2.WND_PROP_FULLSCREEN,cv2.WINDOW_FULLSCREEN)
+    cv2.namedWindow("Camera", cv2.WND_PROP_FULLSCREEN)
+    cv2.setWindowProperty("Camera",cv2.WND_PROP_FULLSCREEN,cv2.WINDOW_FULLSCREEN)
     cv2.imshow("Camera", frame)
     
     if (ScanState.exitProgram):
