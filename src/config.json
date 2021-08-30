@@ -28,6 +28,10 @@
         }
     ],
     "scan-duration" : 5,
+    "timer-duration" : {
+        "shutdown" : 6,
+        "exit" : 2
+    },
     "camera-config" : {
         "ipcam" : "false",
         "ip" : "192.168.43.218:8080",

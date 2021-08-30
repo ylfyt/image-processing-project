@@ -28,3 +28,10 @@ class Config:
         f.close()
 
         return data['camera-config']
+    
+    def getTimerDuration():
+        f = open("config.json")
+        data = json.load(f)
+        f.close()
+
+        return data['timer-duration']

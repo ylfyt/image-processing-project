@@ -1,6 +1,7 @@
 from time import sleep, time
 import datetime
 from threading import *
+from classes.config import Config
 # import RPi.GPIO as GPIO
 from gpiozero import Button
 from gpiozero import LED
@@ -63,9 +64,11 @@ def getPicture(frame, cond):
 # btnResetPressed = False
 
 def btnControl():
-
-    btnResetExitTimer = 3
-    btnResetShutdownTimer = 6
+    timerDutarion = Config.getTimerDuration()
+    btnResetExitTimer = timerDutarion['exit']
+    btnResetShutdownTimer = timerDutarion['shutdown']
+    print(btnResetExitTimer)
+    print(btnResetShutdownTimer)
     timeCounter = 0
     prevPressed = time()
 
