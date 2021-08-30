@@ -59,8 +59,8 @@ while True:
     if (ScanState.isState("picture")):
         frame = showOutput(output_path)
     else:
-        # frame = cam.getVideo()
-        frame = cv2.imread("../img/sample-normal.jpg")
+        frame = cam.getVideo()
+        # frame = cv2.imread("../img/sample-normal.jpg")
 
     if (not ScanState.isState("picture")):
         hsv_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
