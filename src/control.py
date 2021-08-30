@@ -5,7 +5,9 @@ from threading import *
 from gpiozero import Button
 from gpiozero import LED
 import cv2
+from subprocess import call
 from classes.scan_state import ScanState
+
 
 
 # GPIO.setmode(GPIO.BOARD)
@@ -85,6 +87,7 @@ def btnControl():
 
         if (btnReset.is_pressed):
             if (time() - prevPressed >= btnResetTimer):
+                call("sudo nohup shutdown -h now", shell=True)
                 ScanState.exitProgram = True
         else:
             prevPressed = time()
