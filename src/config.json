@@ -41,8 +41,8 @@
         "exit" : 2
     },
     "camera-config" : {
-        "ipcam" : "false",
-        "ip" : "192.168.43.218:8080",
+        "ipcam" : "true",
+        "ip" : "192.168.43.56:8080",
         "width" : 480,
         "height" : 320
     }
