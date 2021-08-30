@@ -99,8 +99,7 @@ def btnControl():
                 # ScanState.exitProgram = True
             timeCounter = 0
             prevPressed = time()
-        
-        print(timeCounter)
+    
 
         if (ScanState.exitProgram):
             break
