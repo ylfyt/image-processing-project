@@ -73,7 +73,12 @@ while True:
         condition = ""
         if (nMax > 750):
             meanRGB = cv2.mean(frame, maxMask.getMask())
-            condition = getCondition(meanRGB[2], meanRGB[1], meanRGB[0])
+            r = meanRGB[2]
+            g = meanRGB[1]
+            b = meanRGB[0]
+            condition = getCondition(r, g, b)
+
+            condition += " | " + str(round(r)) +  " " + str(round(g)) +  " " + str(round(b)) 
 
             maxMask.drawContours(frame, "")
         
