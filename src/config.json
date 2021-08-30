@@ -4,7 +4,7 @@
             "name" : "Red",
             "include" : "True",
             "lower" : [0, 100, 70], 
-            "upper" : [12, 255, 255]
+            "upper" : [25, 255, 255]
         },
         {
             "name" : "Red",
@@ -41,7 +41,7 @@
         "exit" : 2
     },
     "camera-config" : {
-        "ipcam" : "false",
+        "ipcam" : "true",
         "ip" : "192.168.43.56:8080",
         "width" : 480,
         "height" : 320
