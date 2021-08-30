@@ -78,8 +78,6 @@ while True:
             hsvCode = (hsvCode[0]*180, hsvCode[1]*255, hsvCode[2])
             condition = getCondition(hsvCode)
 
-            condition += " | " + str(round(hsvCode[0])) +  " " + str(round(hsvCode[1])) +  " " + str(round(hsvCode[2])) 
-
             maxMask.drawContours(frame, "")
         
         if (ScanState.isState("scanning")):
