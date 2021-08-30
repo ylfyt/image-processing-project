@@ -6,22 +6,23 @@ from classes.config import Config
 import cv2
 import control as cl
 import time
+import colorsys
 
 conditionRange = Config.getCondition()
 
-def getCondition(r, g, b):
+def getCondition(hsv):
     for cond in conditionRange:
-        rgbLower = cond['lower']
-        rLower = rgbLower[0]
-        gLower = rgbLower[1]
-        bLower = rgbLower[2]
+        hsvLower = cond['lower']
+        hLower = hsvLower[0]
+        sLower = hsvLower[1]
+        vLower = hsvLower[2]
 
-        rgbUpper = cond['upper']
-        rUpper = rgbUpper[0]
-        gUpper = rgbUpper[1]
-        bUpper = rgbUpper[2]
+        hsvUpper = cond['upper']
+        hUpper = hsvUpper[0]
+        sUpper = hsvUpper[1]
+        vUpper = hsvUpper[2]
 
-        if (rLower <= r <= rUpper and gLower <= g <= gUpper and bLower <= b <= bUpper):
+        if (hLower <= hsv[0] <= hUpper and sLower <= hsv[1] <= sUpper and vLower <= hsv[2] <= vUpper):
             return cond['desc']
     
     return "Unknown"
@@ -73,10 +74,8 @@ while True:
         condition = ""
         if (nMax > 750):
             meanRGB = cv2.mean(frame, maxMask.getMask())
-            r = meanRGB[2]
-            g = meanRGB[1]
-            b = meanRGB[0]
-            condition = getCondition(r, g, b)
+            hsvCode = colorsys.rgb_to_hsv(meanRGB[2], meanRGB[1], meanRGB[0])
+            condition = getCondition(hsvCode)
 
             condition += " | " + str(round(r)) +  " " + str(round(g)) +  " " + str(round(b)) 
 
