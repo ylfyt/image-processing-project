@@ -3,38 +3,14 @@
         {
             "name" : "Red",
             "include" : "True",
-            "lower" : [0, 85, 65], 
-            "upper" : [10, 255, 255]
+            "lower" : [0, 100, 70], 
+            "upper" : [12, 255, 255]
         },
         {
             "name" : "Red",
             "include" : "True",
-            "lower" : [160, 85, 65], 
-            "upper" : [179, 255, 255]
-        },
-        {
-            "name" : "Blue",
-            "include" : "True",
-            "lower" : [95, 100, 70], 
-            "upper" : [130, 255, 255]
-        },
-        {
-            "name" : "Green",
-            "include" : "True",
-            "lower" : [35, 95, 70], 
-            "upper" : [80, 255, 255]
-        },
-        {
-            "name" : "Orange",
-            "include" : "True",
-            "lower" : [10, 100, 20], 
-            "upper" : [10, 100, 20]
-        },
-        {
-            "name" : "Non White",
-            "include" : "False",
-            "lower" : [0, 42, 0],
-            "upper" : [179, 255, 255]
+            "lower" : [165, 100, 70], 
+            "upper" : [180, 255, 255]
         }
     ],
     "conditions" : [
