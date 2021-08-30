@@ -64,7 +64,9 @@ def getPicture(frame, cond):
 
 def btnControl():
 
-    btnResetTimer = 3
+    btnResetExitTimer = 3
+    btnResetShutdownTimer = 6
+    timeCounter = 0
     prevPressed = time()
 
     while True:
@@ -86,11 +88,19 @@ def btnControl():
         ScanState.btnResetPressed = btnReset.is_pressed
 
         if (btnReset.is_pressed):
-            if (time() - prevPressed >= btnResetTimer):
-                call("sudo nohup shutdown -h now", shell=True)
-                ScanState.exitProgram = True
+            timeCounter = time() - prevPressed
+            if (timeCounter >= btnResetShutdownTimer):
+                print("Shutdown")
+                # call("sudo nohup shutdown -h now", shell=True)
+                # ScanState.exitProgram = True
         else:
+            if (timeCounter >= btnResetExitTimer):
+                print("exit")
+                # ScanState.exitProgram = True
+            timeCounter = 0
             prevPressed = time()
+        
+        print(timeCounter)
 
         if (ScanState.exitProgram):
             break
