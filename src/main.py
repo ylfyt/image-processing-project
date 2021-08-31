@@ -83,7 +83,7 @@ while True:
         if (ScanState.isState("scanning")):
             if (ScanState.getScanTime() >= ScanState.SCAN_DURATION):
                 if (condition == ""):
-                    condition = "Aman"
+                    condition = "Unknown"
                 maxMask.drawContours(frame, condition)
                 # TODO: Take a picture
                 output_path = cl.getPicture(frame, condition)
